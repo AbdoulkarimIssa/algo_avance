@@ -59,26 +59,65 @@ void remplissage_de_la_matrice(Matrice* mat){
 }
 /*calcul du somme des matrices*/
 
-/*double** calcul_de_la_somme(){
-	double** matrice_resultante;
-	if (ligne1==ligne2 && colones1==colones2){
-		matrice_resultante=creation_de_matrice(ligne1,colones1);
-		for (int i=0;i<ligne1;i++){
-			for(int j=0;j<colones1;j++){
-				matrice_resultante[i][j]=matrice1[i][j]+matrice2[i][j];
+Matrice* calcul_de_la_somme(Matrice* mat1, Matrice* mat2){
+	Matrice* matrice_resultante;	
+	if (mat1->ligne==mat2->ligne && mat1->colone==mat2->colone){
+		matrice_resultante=creation_de_matrice(mat1->ligne,mat1->colone);
+		for (int i=0;i<mat1->ligne;i++){
+			for(int j=0;j<mat1->colone;j++){
+				
+				matrice_resultante->ma_matrice[i][j]=(mat1->ma_matrice[i][j])+(mat2->ma_matrice[i][j]);
 			}
 		}
 	}
 	return matrice_resultante;
 }
-*/
+
+/*calcul du produit*/
+
+Matrice* calcul_du_produit(Matrice* mat1, Matrice* mat2){
+	Matrice* matrice_resultante;
+	int j;
+	int k;
+	double accumilateur=0;	
+	if (mat1->colone==mat2->ligne){
+		matrice_resultante=creation_de_matrice(mat2->colone,mat1->ligne);
+		for (int i=0;i<mat1->ligne;i++){			
+			for (j=0;j<mat2->colone;j++){
+				for (k=0;k<mat2->ligne;k++){	
+					accumilateur=accumilateur+(mat1->ma_matrice[i][k])*(mat2->ma_matrice[k][j]);
+				}
+				matrice_resultante->ma_matrice[i][j]=accumilateur;
+				accumilateur=0;
+			}
+		}
+	
+}
+return matrice_resultante;
+}
+
 	
 int main(){
 	Matrice* m1;
-	m1=creation_de_matrice(1,2);
+	Matrice* m2;
+	//Matrice* somme;
+	Matrice* multi;
+	m1=creation_de_matrice(2,2);
+	m2=creation_de_matrice(2,2);
+	printf("remplissage M1\n");
 	remplissage_de_la_matrice(m1);
+	printf("remplissage M2\n");
+	remplissage_de_la_matrice(m2);
+	printf("affichage M1\n");
 	affichage_de_matrice(m1);
+	printf("affichage M2\n");
+	affichage_de_matrice(m2);
+	multi=calcul_du_produit(m1,m2);
+	printf("produit\n");
+	affichage_de_matrice(multi);
 	liberation_de_la_memoire(m1);
+	liberation_de_la_memoire(m2);
+	liberation_de_la_memoire(multi);
 	return 0;
 	
 }
