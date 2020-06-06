@@ -111,23 +111,20 @@ double trace_dune_matrice(Matrice* m1){
 
 //a)extraction de la mineur
 
-Matrice* extraction_de_la_matrice_mineur(Matrice* m1){
+Matrice* extraction_de_la_matrice_mineur(Matrice* m1,int ligne, int colone){
 	Matrice* mineur;
-	if(m1->ligne>2){
 	mineur=creation_de_matrice((m1->ligne)-1,(m1->colone)-1);
-	for (int i=0;i<mineur->ligne;i++){	
-		for (int j=0;j<mineur->colone;j++){
-			if((i+1)<(m1->ligne)){
-				
-			mineur->ma_matrice[i][j]=m1->ma_matrice[i+1][j+1];
+	for (int i=0;i<m1->ligne;i++){
+		if(i!=ligne){	
+		for (int j=0;j<m1->colone;j++){
+			if(j!=colone){
+		    printf("%d  %d",i,j);
+			mineur->ma_matrice[i][j]=m1->ma_matrice[i][j];
+		}
 			}
 		}
 	}
-	return mineur;
-}
-else{
-	return m1;
-}
+return mineur;
 }
 
 //b)calcul d'un determinat d'une matrice a deux dimention
@@ -142,34 +139,43 @@ double determiant(Matrice* m1){
 double calcul_du_determinant(Matrice* m1){
 	Matrice* mineur;
 	double det;
-	mineur=extraction_de_la_matrice_mineur(m1);
-	if(m1->ligne>2){		
-		det=m1->ma_matrice[0][0]*determiant(mineur);
+	//int signe=1;
+	//int acc=0;//il contiendra tout la reponce des multiplication de coef pour chque ligne.
+	
+	for (int i=0; i<(m1->ligne);i++){
+		//mineur=extraction_de_la_matrice_mineur(m1);
+		
+	if(m1->ligne>2){
+				
+		//det=m1->ma_matrice[0][0]*determiant(mineur);
 	}
 	else
 	{
-		det=determiant(mineur);
+		//det=determiant(mineur);
 	}
-	return det;
 	
+	
+}
+return 0;
 }
 
 int main(){
 	Matrice* m1;
 	Matrice* m2;
-	//Matrice* somme;
+	/*Matrice* somme;
 	Matrice* multi;
 	double trace;
-	double det;
-	m1=creation_de_matrice(2,2);
-	m2=creation_de_matrice(2,2);
+	double det;*/
+	m1=creation_de_matrice(4,4);
+	//m2=creation_de_matrice(2,2);
 	printf("remplissage M1\n");
 	remplissage_de_la_matrice(m1);
-	printf("remplissage M2\n");
+	/*printf("remplissage M2\n");
 	remplissage_de_la_matrice(m2);
 	printf("affichage M1\n");
+	* */
 	affichage_de_matrice(m1);
-	printf("affichage M2\n");
+	/*printf("affichage M2\n");
 	affichage_de_matrice(m2);
 	multi=calcul_du_produit(m1,m2);
 	printf("produit\n");
@@ -178,9 +184,13 @@ int main(){
 	printf("la trace est : %f\n",trace);
 	det=calcul_du_determinant(m1);
 	printf("determiant : %f\n",det);
+	* */
+	
+	m2=extraction_de_la_matrice_mineur(m1,1,2);
+	affichage_de_matrice(m2);
 	liberation_de_la_memoire(m1);
 	liberation_de_la_memoire(m2);
-	liberation_de_la_memoire(multi);
+	//liberation_de_la_memoire(multi);
 	return 0;
 	
 }
